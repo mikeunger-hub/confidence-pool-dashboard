@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Confidence">
+<meta name="theme-color" content="#0f0b1a">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%236d3fd6'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia,serif' font-weight='700' fill='white' text-anchor='middle'%3E16%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%236d3fd6'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia,serif' font-weight='700' fill='white' text-anchor='middle'%3E16%3C/text%3E%3C/svg%3E">
+<title>Confidence Command</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root {
+    --ink: #1a1526;
+    --ink-soft: #554e69;
+    --ink-muted: #8a80a0;
+    --paper: #f3f0f8;
+    --surface: #ffffff;
+    --surface-2: #e9e3f4;
+    --line: rgba(26, 21, 38, 0.12);
+    --accent: #6d3fd6;
+    --accent-ink: #ffffff;
+    --accent-soft: rgba(109, 63, 214, 0.12);
+    --gold: #a8781f;
+    --gold-soft: rgba(168, 120, 31, 0.14);
+    --good: #0ca363;
+    --good-soft: rgba(12, 163, 99, 0.13);
+    --warn: #b8720f;
+    --warn-soft: rgba(250, 178, 25, 0.18);
+    --crit: #d0433b;
+    --crit-soft: rgba(208, 67, 59, 0.13);
+    --shadow: 0 1px 2px rgba(26, 21, 38, 0.06), 0 8px 24px -12px rgba(26, 21, 38, 0.18);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #ece8f5;
+      --ink-soft: #b3a9cc;
+      --ink-muted: #837aa0;
+      --paper: #0f0b1a;
+      --surface: #191324;
+      --surface-2: #241b34;
+      --line: rgba(236, 232, 245, 0.12);
+      --accent: #a683f0;
+      --accent-ink: #0f0b1a;
+      --accent-soft: rgba(166, 131, 240, 0.18);
+      --gold: #dba748;
+      --gold-soft: rgba(219, 167, 72, 0.16);
+      --good: #35d18e;
+      --good-soft: rgba(53, 209, 142, 0.16);
+      --warn: #e0b23a;
+      --warn-soft: rgba(224, 178, 58, 0.18);
+      --crit: #e5716a;
+      --crit-soft: rgba(229, 113, 106, 0.16);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -12px rgba(0, 0, 0, 0.55);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #ece8f5; --ink-soft: #b3a9cc; --ink-muted: #837aa0;
+    --paper: #0f0b1a; --surface: #191324; --surface-2: #241b34;
+    --line: rgba(236, 232, 245, 0.12);
+    --accent: #a683f0; --accent-ink: #0f0b1a; --accent-soft: rgba(166, 131, 240, 0.18);
+    --gold: #dba748; --gold-soft: rgba(219, 167, 72, 0.16);
+    --good: #35d18e; --good-soft: rgba(53, 209, 142, 0.16);
+    --warn: #e0b23a; --warn-soft: rgba(224, 178, 58, 0.18);
+    --crit: #e5716a; --crit-soft: rgba(229, 113, 106, 0.16);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -12px rgba(0, 0, 0, 0.55);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { background: var(--paper); }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: 'Karla', ui-sans-serif, system-ui, sans-serif;
+    font-size: 15px; line-height: 1.5;
+    padding: clamp(14px, 4vw, 32px) clamp(14px, 4vw, 32px) 60px;
+    max-width: 720px; margin: 0 auto;
+  }
+  h1, h2, h3, .label { font-family: 'Oswald', ui-sans-serif, system-ui, sans-serif; text-transform: uppercase; letter-spacing: 0.04em; text-wrap: balance; }
+  .mono, .num { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  header { border-bottom: 2px solid var(--ink); padding-bottom: 14px; margin-bottom: 20px; }
+  header .top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  h1 { font-size: 26px; margin: 0; letter-spacing: 0.02em; }
+  header .sub { color: var(--ink-soft); font-size: 13px; margin-top: 4px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent);
+    border-radius: 999px; padding: 4px 11px; font-family: 'Oswald', sans-serif;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap;
+  }
+
+  nav.tabs { display: flex; gap: 6px; margin: 18px 0 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  nav.tabs button {
+    flex: none; font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.04em;
+    font-size: 12.5px; padding: 9px 14px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink-soft); cursor: pointer;
+  }
+  nav.tabs button.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  section.panel { display: none; }
+  section.panel.active { display: block; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow);
+  }
+  .card h2 { font-size: 15px; margin: 0 0 3px; }
+  .card .desc { color: var(--ink-muted); font-size: 12.5px; margin-bottom: 12px; }
+
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+  .stat-tile {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 10px; text-align: center; box-shadow: var(--shadow);
+  }
+  .stat-tile .v { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; color: var(--accent); }
+  .stat-tile .l { font-size: 10.5px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+  .game-row {
+    display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid var(--line);
+  }
+  .game-row:last-child { border-bottom: none; }
+  .pt-chip {
+    width: 34px; height: 34px; border-radius: 9px; background: var(--ink); color: var(--paper);
+    display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600; font-size: 15px; flex: none;
+  }
+  .pt-chip.split { background: var(--warn); color: #1a1526; }
+  .game-main { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+  .game-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .matchup { font-size: 12px; color: var(--ink-muted); }
+  .picks-line { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .pick-pill {
+    font-family: 'Oswald', sans-serif; font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em;
+    padding: 3px 9px; border-radius: 7px; background: var(--accent-soft); color: var(--accent);
+  }
+  .pick-pill.e2 { background: var(--gold-soft); color: var(--gold); }
+  .prob-bar-wrap { height: 6px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin-top: 2px; }
+  .prob-bar { height: 100%; background: var(--accent); border-radius: 4px; }
+  .split-tag {
+    font-size: 10.5px; font-family: 'IBM Plex Mono', monospace; color: var(--warn);
+    background: var(--warn-soft); border-radius: 5px; padding: 1px 6px; white-space: nowrap;
+  }
+
+  .swing-card { border-left: 3px solid var(--warn); }
+  .swing-card .who { font-size: 12.5px; margin: 3px 0; }
+  .swing-card .who b { color: var(--ink); }
+
+  .vs-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .vs-col { flex: 1; background: var(--surface-2); border-radius: 12px; padding: 14px; text-align: center; }
+  .vs-col .name { font-family: 'Oswald', sans-serif; font-size: 12.5px; color: var(--ink-soft); text-transform: uppercase; }
+  .vs-col .score { font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 600; margin-top: 4px; }
+  .vs-mid { font-family: 'Oswald', sans-serif; color: var(--ink-muted); font-size: 12px; }
+
+  .hbar-row { display: grid; grid-template-columns: 90px 1fr 40px; gap: 8px; align-items: center; padding: 5px 0; font-size: 12.5px; }
+  .hbar-track { height: 16px; background: var(--surface-2); border-radius: 5px; overflow: hidden; }
+  .hbar-fill { height: 100%; border-radius: 5px; background: var(--accent); display: flex; align-items: center; }
+  .hbar-fill.good { background: var(--good); }
+  .hbar-fill.crit { background: var(--crit); }
+  .hbar-val { text-align: right; font-family: 'IBM Plex Mono', monospace; color: var(--ink-soft); }
+  .hbar-label { color: var(--ink-soft); font-size: 11.5px; }
+
+  .empty-note {
+    text-align: center; padding: 26px 14px; color: var(--ink-muted); font-size: 13px;
+    border: 1px dashed var(--line); border-radius: 12px;
+  }
+
+  .lb-row {
+    display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center;
+    padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13.5px;
+  }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-rank { color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+  .lb-name { font-family: 'Oswald', sans-serif; letter-spacing: 0.01em; }
+  .lb-score { font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+  .lb-row.mine { background: var(--accent-soft); border-radius: 8px; padding: 8px 8px; margin: 0 -8px; }
+  .lb-row.mine .lb-name { color: var(--accent); font-weight: 600; }
+
+  .warn-note {
+    font-size: 12px; color: var(--warn); background: var(--warn-soft);
+    border-radius: 10px; padding: 10px 12px; margin-top: 10px; line-height: 1.45;
+  }
+
+  footer { text-align: center; color: var(--ink-muted); font-size: 11px; margin-top: 24px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="top">
+    <h1>Confidence&nbsp;Command</h1>
+    <span class="badge" id="weekBadge">Week 1</span>
+  </div>
+  <div class="sub">2 entries · winner-take-all · locks before first kickoff</div>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-tab="picks">This Week</button>
+  <button data-tab="swings">Swing Games</button>
+  <button data-tab="pool">Pool</button>
+  <button data-tab="standings">Standings</button>
+  <button data-tab="sources">Sources</button>
+</nav>
+
+<section class="panel active" id="panel-picks">
+  <div class="stat-row" id="statRow"></div>
+  <div class="card">
+    <h2>Recommended Picks</h2>
+    <div class="desc">Ranked 16 (most confident) → 1 (least). Purple = Entry 1, gold = Entry 2 where it differs.</div>
+    <div id="picksList"></div>
+  </div>
+</section>
+
+<section class="panel" id="panel-swings">
+  <div class="card">
+    <h2>Where Sources Disagree</h2>
+    <div class="desc">These are the games actually deciding separation from the field — Entry 2 intentionally forks here.</div>
+    <div id="swingList"></div>
+  </div>
+</section>
+
+<section class="panel" id="panel-pool">
+  <div class="card">
+    <h2>Pool Leaderboard</h2>
+    <div class="desc" id="poolDesc">Full field, real standings from the pool's own weekly scoresheet.</div>
+    <div id="poolBody"></div>
+  </div>
+</section>
+
+<section class="panel" id="panel-standings">
+  <div class="card">
+    <h2>Entry 1 vs Entry 2</h2>
+    <div class="desc">Cumulative points across graded weeks.</div>
+    <div class="vs-row">
+      <div class="vs-col"><div class="name">Entry 1</div><div class="score num" id="e1total">–</div></div>
+      <div class="vs-mid">PTS</div>
+      <div class="vs-col"><div class="name">Entry 2</div><div class="score num" id="e2total">–</div></div>
+    </div>
+    <div id="standingsBody"></div>
+    <div id="discrepancyNote"></div>
+  </div>
+</section>
+
+<section class="panel" id="panel-sources">
+  <div class="card">
+    <h2>Source Accuracy</h2>
+    <div class="desc">Straight-up hit rate, tracked ourselves across the season — not each source's self-reported record.</div>
+    <div id="sourceBars"></div>
+  </div>
+</section>
+
+<footer id="footerNote">Confidence Pool · fantasy-football-2026</footer>
+
+<script>
+/* ---------- EMBEDDED DATA ----------
+   Mirrors confidence_pool_log.json. To update: re-paste the "weeks" object
+   and sourceAccuracyTally here after each week's picks/results change. */
+const DATA = {
+  generatedAt: "2026-09-16",
+  poolInfo: {
+    entries: 2,
+    format: "winner-take-all confidence pool"
+  },
+  weeks: {
+    "1": {
+      games: [
+        { pts: 16, matchup: "ARI @ LAC", pick1: "LAC", pick2: "LAC", vegasProb: 0.771, dimersProb: 0.773, split: false, result: "ARI", score: "ARI 26-14", note: "Biggest miss of the week — our single highest-confidence pick, wrong." },
+        { pts: 15, matchup: "CLE @ JAX", pick1: "JAX", pick2: "JAX", vegasProb: 0.711, dimersProb: 0.777, split: false, result: "JAX", score: "JAX 34-10" },
+        { pts: 14, matchup: "NO @ DET", pick1: "DET", pick2: "DET", vegasProb: 0.698, dimersProb: 0.723, split: false, result: "DET", score: "DET 31-30 (OT)" },
+        { pts: 13, matchup: "WAS @ PHI", pick1: "PHI", pick2: "PHI", vegasProb: 0.630, dimersProb: 0.661, split: false, result: "PHI", score: "PHI 24-22" },
+        { pts: 12, matchup: "TB @ CIN", pick1: "CIN", pick2: "CIN", vegasProb: 0.602, dimersProb: 0.664, split: false, result: "CIN", score: "CIN 33-27" },
+        { pts: 11, matchup: "SF @ LAR", pick1: "LAR", pick2: "LAR", vegasProb: 0.602, dimersProb: 0.629, split: false, result: "SF", score: "SF 27-7", note: "Upset — SF won decisively in Melbourne." },
+        { pts: 10, matchup: "NE @ SEA", pick1: "SEA", pick2: "SEA", vegasProb: 0.602, dimersProb: 0.619, split: false, result: "SEA", score: "SEA 13-10" },
+        { pts: 9,  matchup: "ATL @ PIT", pick1: "PIT", pick2: "PIT", vegasProb: 0.602, dimersProb: 0.617, split: false, result: "PIT", score: "PIT 20-13" },
+        { pts: 8,  matchup: "MIA @ LV", pick1: "LV", pick2: "LV", vegasProb: 0.602, dimersProb: 0.597, split: false, result: "LV", score: "LV 27-13" },
+        { pts: 7,  matchup: "DAL @ NYG", pick1: "DAL", pick2: "DAL", vegasProb: 0.588, dimersProb: 0.613, split: false, result: "NYG", score: "NYG 28-20" },
+        { pts: 6,  matchup: "BAL @ IND", pick1: "BAL", pick2: "BAL", vegasProb: 0.588, dimersProb: 0.612, split: false, result: "BAL", score: "BAL 41-23" },
+        { pts: 5,  matchup: "CHI @ CAR", pick1: "CHI", pick2: "CHI", vegasProb: 0.588, dimersProb: 0.602, split: false, result: "CHI", score: "CHI 59-37" },
+        { pts: 4,  matchup: "DEN @ KC",  pick1: "KC",  pick2: "DEN", vegasProb: 0.588, dimersProb: 0.586, split: true, splitSource: "Yahoo/Sportsnaut favors Broncos", result: "KC", score: "KC 31-10" },
+        { pts: 3,  matchup: "GB @ MIN",  pick1: "MIN", pick2: "GB",  vegasProb: 0.544, dimersProb: 0.554, split: true, splitSource: "Yahoo/Sportsnaut favors Packers", result: "MIN", score: "MIN 39-22" },
+        { pts: 2,  matchup: "NYJ @ TEN", pick1: "TEN", pick2: "NYJ", vegasProb: 0.544, dimersProb: 0.541, split: true, splitSource: "Yahoo/Sportsnaut favors Jets", result: "NYJ", score: "NYJ 23-10", note: "Decorrelation win — Entry 2's contrarian pick hit." },
+        { pts: 1,  matchup: "BUF @ HOU", pick1: "HOU", pick2: "BUF", vegasProb: 0.544, dimersProb: 0.419, split: true, splitSource: "Dimers model favors Bills (58.1%)", result: "BUF", score: "BUF 36-31", note: "Decorrelation win — Entry 2's contrarian pick hit." }
+      ],
+      computedTotals: { entry1: 99, entry2: 95 },
+      discrepancy: "Pool's own leaderboard shows MIKE2=95 (matches our computed Entry 2 exactly) but MIKE1=91 vs our computed 99 — an unresolved 8-point gap. Check what was actually submitted for Entry 1."
+    },
+    "2": {
+      games: [
+        { pts: 16, matchup: "MIA @ SF",  pick1: "SF",  pick2: "SF",  vegasProb: 0.823, dimersProb: 0.861, split: false },
+        { pts: 15, matchup: "NO @ BAL",  pick1: "BAL", pick2: "BAL", vegasProb: 0.735, dimersProb: 0.763, split: false },
+        { pts: 14, matchup: "CLE @ TB",  pick1: "TB",  pick2: "TB",  vegasProb: 0.735, dimersProb: 0.757, split: false },
+        { pts: 13, matchup: "NYG @ LAR", pick1: "LAR", pick2: "NYG", vegasProb: 0.698, dimersProb: 0.761, split: true, splitSource: "Yahoo/Sportsnaut takes Giants outright MNF upset; Vegas+Dimers strongly favor Rams", note: "Biggest risk/reward split of the season so far — not a toss-up, a real swing on a strongly-favored team." },
+        { pts: 12, matchup: "PHI @ TEN", pick1: "PHI", pick2: "PHI", vegasProb: 0.698, dimersProb: 0.742, split: false },
+        { pts: 11, matchup: "LV @ LAC",  pick1: "LAC", pick2: "LAC", vegasProb: 0.698, dimersProb: 0.719, split: false },
+        { pts: 10, matchup: "IND @ KC",  pick1: "KC",  pick2: "KC",  vegasProb: 0.685, dimersProb: 0.701, split: false },
+        { pts: 9,  matchup: "PIT @ NE",  pick1: "NE",  pick2: "NE",  vegasProb: 0.658, dimersProb: 0.693, split: false },
+        { pts: 8,  matchup: "MIN @ CHI", pick1: "CHI", pick2: "CHI", vegasProb: 0.658, dimersProb: 0.671, split: false },
+        { pts: 7,  matchup: "GB @ NYJ",  pick1: "GB",  pick2: "GB",  vegasProb: 0.631, dimersProb: 0.647, split: false },
+        { pts: 6,  matchup: "SEA @ ARI", pick1: "SEA", pick2: "SEA", vegasProb: 0.631, dimersProb: 0.626, split: false },
+        { pts: 5,  matchup: "DET @ BUF", pick1: "BUF", pick2: "BUF", vegasProb: 0.602, dimersProb: 0.659, split: false },
+        { pts: 4,  matchup: "WAS @ DAL", pick1: "DAL", pick2: "DAL", vegasProb: 0.602, dimersProb: 0.611, split: false },
+        { pts: 3,  matchup: "CIN @ HOU", pick1: "HOU", pick2: "CIN", vegasProb: 0.588, dimersProb: 0.564, split: true, splitSource: "Yahoo/Sportsnaut favors Bengals outright" },
+        { pts: 2,  matchup: "JAX @ DEN", pick1: "DEN", pick2: "JAX", vegasProb: 0.573, dimersProb: 0.574, split: true, splitSource: "Yahoo/Sportsnaut favors Jaguars outright" },
+        { pts: 1,  matchup: "CAR @ ATL", pick1: "CAR", pick2: "CAR", vegasProb: 0.544, dimersProb: 0.584, split: false, note: "Coin-flip game, correctly parked at 1 point regardless of source agreement." }
+      ]
+    }
+  },
+  poolLeaderboard: {
+    week: 1,
+    myEntries: ["MIKE1", "MIKE2"],
+    standings: [
+      { name: "SKYE1", pts: 108 }, { name: "JASON", pts: 104 }, { name: "MARTY", pts: 101 },
+      { name: "CRAIG", pts: 100 }, { name: "ROSS", pts: 96 }, { name: "MIKE2", pts: 95 },
+      { name: "RISSA", pts: 94 }, { name: "FELICIA", pts: 93 }, { name: "MIKE1", pts: 91 },
+      { name: "CHRIS", pts: 90 }, { name: "ROB", pts: 88 }, { name: "SKYE2", pts: 87 },
+      { name: "SEAN1", pts: 83 }, { name: "JEN", pts: 81 }, { name: "JACKIE O", pts: 78 },
+      { name: "HANNAH", pts: 77 }, { name: "SEAN2", pts: 74 }
+    ]
+  },
+  sourceAccuracyTally: {
+    vegasClose: { correct: 11, total: 16 },
+    espnFPI: { correct: 0, total: 0 },
+    sportsline: { correct: 0, total: 0 },
+    dimers: { correct: 12, total: 16 },
+    yahooSportsnaut: { correct: 10, total: 16 },
+    teamRankings: { correct: 0, total: 0 },
+    walterfootball: { correct: 0, total: 0 }
+  }
+};
+/* ------------------------------------ */
+
+const weekKeys = Object.keys(DATA.weeks).map(Number).sort((a,b)=>a-b);
+const latestWeek = weekKeys[weekKeys.length - 1];
+document.getElementById('weekBadge').textContent = 'Week ' + latestWeek;
+
+const games = DATA.weeks[String(latestWeek)].games;
+const totalPts = games.reduce((s,g)=>s+g.pts,0);
+const splitCount = games.filter(g=>g.split).length;
+const avgProb = (games.reduce((s,g)=>s+g.vegasProb,0)/games.length*100).toFixed(0);
+
+document.getElementById('statRow').innerHTML = `
+  <div class="stat-tile"><div class="v">${games.length}</div><div class="l">Games</div></div>
+  <div class="stat-tile"><div class="v">${splitCount}</div><div class="l">Swing Games</div></div>
+  <div class="stat-tile"><div class="v">${avgProb}%</div><div class="l">Avg Fav. Prob</div></div>
+`;
+
+document.getElementById('picksList').innerHTML = games.map(g => {
+  const e1ok = g.result ? g.result === g.pick1 : null;
+  const e2ok = g.result ? g.result === g.pick2 : null;
+  return `
+  <div class="game-row">
+    <div class="pt-chip ${g.split ? 'split' : ''}">${g.pts}</div>
+    <div class="game-main">
+      <div class="game-top">
+        <span class="matchup mono">${g.matchup}${g.score ? ' · ' + g.score : ''}</span>
+        ${g.split ? '<span class="split-tag">SPLIT</span>' : ''}
+      </div>
+      <div class="picks-line">
+        <span class="pick-pill">${g.pick1}${g.result ? (e1ok ? ' ✓' : ' ✗') : ''}</span>
+        ${g.pick2 !== g.pick1 ? `<span class="pick-pill e2">${g.pick2}${g.result ? (e2ok ? ' ✓' : ' ✗') : ''} (E2)</span>` : ''}
+        ${!g.result ? `<span class="mono" style="font-size:11px;color:var(--ink-muted);margin-left:auto">${(g.vegasProb*100).toFixed(0)}%</span>` : ''}
+      </div>
+      ${!g.result ? `<div class="prob-bar-wrap"><div class="prob-bar" style="width:${(g.vegasProb*100).toFixed(0)}%"></div></div>` : ''}
+      ${g.note ? `<div style="font-size:11.5px;color:var(--ink-muted);margin-top:2px;">${g.note}</div>` : ''}
+    </div>
+  </div>
+`;
+}).join('');
+
+const swings = games.filter(g => g.split);
+document.getElementById('swingList').innerHTML = swings.length ? swings.map(g => `
+  <div class="card swing-card" style="margin-bottom:10px;box-shadow:none;padding:12px 14px;">
+    <div class="game-top"><span class="matchup mono">${g.matchup}</span><span class="pt-chip split" style="width:26px;height:26px;font-size:12px;">${g.pts}</span></div>
+    <div class="who">Entry 1: <b>${g.pick1}</b> &nbsp;·&nbsp; Entry 2: <b>${g.pick2}</b></div>
+    <div class="who" style="color:var(--ink-muted)">${g.splitSource}</div>
+  </div>
+`).join('') : '<div class="empty-note">No source disagreements this week — every entry rides consensus.</div>';
+
+// Standings across all logged weeks
+let e1total = 0, e2total = 0, anyGraded = false;
+let weekRows = '';
+weekKeys.forEach(wk => {
+  const wgames = DATA.weeks[String(wk)].games;
+  let e1w = 0, e2w = 0, graded = false;
+  wgames.forEach(g => {
+    if (g.result) {
+      graded = true; anyGraded = true;
+      if (g.result === g.pick1) e1w += g.pts;
+      if (g.result === g.pick2) e2w += g.pts;
+    }
+  });
+  e1total += e1w; e2total += e2w;
+  weekRows += `<div class="hbar-row"><div class="hbar-label">Week ${wk}</div>
+    <div class="hbar-track"><div class="hbar-fill ${e1w>e2w?'good':''}" style="width:${wgames.length ? (e1w/(wgames.reduce((s,g)=>s+g.pts,0))*100) : 0}%"></div></div>
+    <div class="hbar-val">${graded ? e1w : '–'}</div></div>`;
+});
+document.getElementById('e1total').textContent = anyGraded ? e1total : '–';
+document.getElementById('e2total').textContent = anyGraded ? e2total : '–';
+document.getElementById('standingsBody').innerHTML = anyGraded ? weekRows : '<div class="empty-note">No games graded yet — Entry totals will populate once results come in. Send me the scores and I will update this file.</div>';
+
+const discNotes = weekKeys.map(wk => DATA.weeks[String(wk)].discrepancy).filter(Boolean);
+document.getElementById('discrepancyNote').innerHTML = discNotes.length
+  ? discNotes.map(n => `<div class="warn-note">⚠ ${n}</div>`).join('')
+  : '';
+
+// Pool leaderboard
+const lb = DATA.poolLeaderboard;
+if (lb) {
+  document.getElementById('poolDesc').textContent = `Week ${lb.week} · full field, real standings from the pool's own weekly scoresheet.`;
+  const sorted = [...lb.standings].sort((a,b) => b.pts - a.pts);
+  document.getElementById('poolBody').innerHTML = sorted.map((row, i) => `
+    <div class="lb-row ${lb.myEntries.includes(row.name) ? 'mine' : ''}">
+      <div class="lb-rank">${i+1}</div>
+      <div class="lb-name">${row.name}</div>
+      <div class="lb-score num">${row.pts}</div>
+    </div>
+  `).join('');
+} else {
+  document.getElementById('poolBody').innerHTML = '<div class="empty-note">No pool-wide leaderboard logged yet — send me a screenshot of the weekly scoresheet and I will add it.</div>';
+}
+
+// Source accuracy
+const tally = DATA.sourceAccuracyTally;
+const srcNames = { vegasClose: "Vegas Line", espnFPI: "ESPN FPI", sportsline: "SportsLine", dimers: "Dimers", yahooSportsnaut: "Yahoo/Sportsnaut", teamRankings: "TeamRankings", walterfootball: "WalterFootball" };
+const anySourceGraded = Object.values(tally).some(t => t.total > 0);
+document.getElementById('sourceBars').innerHTML = anySourceGraded ? Object.entries(tally).map(([k,t]) => {
+  if (!t.total) {
+    return `<div class="hbar-row"><div class="hbar-label">${srcNames[k]}</div>
+      <div class="hbar-track"></div>
+      <div class="hbar-val" style="color:var(--ink-muted)">no data</div></div>`;
+  }
+  const pct = Math.round(t.correct/t.total*100);
+  return `<div class="hbar-row"><div class="hbar-label">${srcNames[k]}</div>
+    <div class="hbar-track"><div class="hbar-fill ${pct>=60?'good':pct<45?'crit':''}" style="width:${pct}%"></div></div>
+    <div class="hbar-val">${pct}% <span style="color:var(--ink-muted)">(${t.total})</span></div></div>`;
+}).join('') : '<div class="empty-note">Tracking starts once Week 1 is graded — check back after Monday night.</div>';
+
+document.getElementById('footerNote').textContent = 'Confidence Pool · Week ' + latestWeek + ' · updated ' + (DATA.generatedAt || '');
+
+// Tabs
+document.querySelectorAll('nav.tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
