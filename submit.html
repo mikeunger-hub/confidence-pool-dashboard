@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confidence Pool — Submit Picks</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root {
+    --ink: #16221c; --ink-soft: #4a584f; --ink-muted: #7c8a80;
+    --paper: #eef1ea; --surface: #ffffff; --surface-2: #e3e8dd;
+    --line: rgba(22, 34, 28, 0.14);
+    --accent: #2f6b45; --accent-ink: #ffffff; --accent-soft: rgba(47, 107, 69, 0.10);
+    --good: #2f6b45; --good-soft: rgba(47, 107, 69, 0.10);
+    --warn: #a8641f; --warn-soft: rgba(168, 100, 31, 0.14);
+    --crit: #a8382b; --crit-soft: rgba(168, 56, 43, 0.10);
+    --shadow: 0 1px 2px rgba(22,34,28,0.06), 0 8px 24px -12px rgba(22,34,28,0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e7ede6; --ink-soft: #a7b6ac; --ink-muted: #7c8a80;
+      --paper: #0f1512; --surface: #161e19; --surface-2: #1e2820;
+      --line: rgba(231, 237, 230, 0.14);
+      --accent: #63b083; --accent-ink: #0f1512; --accent-soft: rgba(99, 176, 131, 0.14);
+      --good: #63b083; --good-soft: rgba(99, 176, 131, 0.14);
+      --warn: #d99a4e; --warn-soft: rgba(217, 154, 78, 0.16);
+      --crit: #dd7b6b; --crit-soft: rgba(221, 123, 107, 0.14);
+      --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 8px 24px -12px rgba(0,0,0,0.55);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #e7ede6; --ink-soft: #a7b6ac; --ink-muted: #7c8a80;
+    --paper: #0f1512; --surface: #161e19; --surface-2: #1e2820;
+    --line: rgba(231, 237, 230, 0.14);
+    --accent: #63b083; --accent-ink: #0f1512; --accent-soft: rgba(99, 176, 131, 0.14);
+    --good: #63b083; --good-soft: rgba(99, 176, 131, 0.14);
+    --warn: #d99a4e; --warn-soft: rgba(217, 154, 78, 0.16);
+    --crit: #dd7b6b; --crit-soft: rgba(221, 123, 107, 0.14);
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 8px 24px -12px rgba(0,0,0,0.55);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: 'Karla', ui-sans-serif, system-ui, sans-serif;
+    font-size: 15px; line-height: 1.5;
+    padding: clamp(14px, 4vw, 32px); max-width: 640px; margin: 0 auto;
+  }
+  h1, .label { font-family: 'Oswald', ui-sans-serif, system-ui, sans-serif; text-transform: uppercase; letter-spacing: 0.04em; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  header { border-bottom: 2px solid var(--ink); padding-bottom: 12px; margin-bottom: 16px; }
+  h1 { font-size: 22px; margin: 0; }
+  header .sub { color: var(--ink-soft); font-size: 13px; margin-top: 4px; }
+
+  .banner { border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: 13.5px; }
+  .banner.info { background: var(--accent-soft); color: var(--accent); }
+  .banner.good { background: var(--good-soft); color: var(--good); }
+  .banner.crit { background: var(--crit-soft); color: var(--crit); }
+  .banner.warn { background: var(--warn-soft); color: var(--warn); }
+  [hidden] { display: none !important; }
+
+  .game-row {
+    display: grid; grid-template-columns: 1fr 90px; gap: 10px; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid var(--line);
+  }
+  .game-row:last-child { border-bottom: none; }
+  .matchup { font-size: 13.5px; }
+  .pick-choices { display: flex; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
+  .pick-btn {
+    font-family: 'Karla', sans-serif; font-size: 12.5px; padding: 6px 10px; border-radius: 7px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink-soft); cursor: pointer;
+  }
+  .pick-btn.selected { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  select.confidence {
+    font-family: 'IBM Plex Mono', monospace; font-size: 14px; padding: 7px; border-radius: 7px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink); width: 100%;
+  }
+
+  button#submitBtn {
+    font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.04em;
+    font-size: 13.5px; padding: 12px 20px; border-radius: 10px; border: none;
+    background: var(--accent); color: var(--accent-ink); cursor: pointer; width: 100%; margin-top: 16px;
+    box-shadow: var(--shadow);
+  }
+  button#submitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+  footer { text-align: center; color: var(--ink-muted); font-size: 11px; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Confidence Pool</h1>
+  <div class="sub" id="subHeader">Loading…</div>
+</header>
+
+<div id="lockBanner" class="banner warn" hidden></div>
+<div id="errorBanner" class="banner crit" hidden></div>
+<div id="successBanner" class="banner good" hidden>Saved — you can keep editing and resubmitting until the deadline.</div>
+
+<form id="pickForm" hidden>
+  <div id="gamesList"></div>
+  <button type="submit" id="submitBtn">Submit picks</button>
+</form>
+
+<footer id="footerNote"></footer>
+
+<script>
+// ---- Fill this in once the Apps Script Web App is deployed ----
+const APPS_SCRIPT_URL = "PASTE_DEPLOYED_WEB_APP_URL_HERE";
+// -----------------------------------------------------------------
+
+const params = new URLSearchParams(window.location.search);
+const entry = params.get('entry');
+
+let GAMES = [];
+let WEEK = null;
+let LOCK_DEADLINE = null;
+
+function showError(msg) {
+  const el = document.getElementById('errorBanner');
+  el.textContent = msg;
+  el.hidden = false;
+}
+
+async function load() {
+  if (!entry) {
+    showError('This link is missing your entry name — use the link from your weekly email.');
+    return;
+  }
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_') === 0) {
+    showError('This form is not wired up yet (missing Apps Script URL).');
+    return;
+  }
+
+  let data;
+  try {
+    const res = await fetch(APPS_SCRIPT_URL + '?entry=' + encodeURIComponent(entry));
+    data = await res.json();
+  } catch (e) {
+    showError('Could not reach the pool server. Try again in a bit.');
+    return;
+  }
+  if (!data.ok) {
+    showError(data.error || 'Something went wrong loading this week.');
+    return;
+  }
+
+  GAMES = data.games;
+  WEEK = data.week;
+  LOCK_DEADLINE = new Date(data.lockDeadline);
+
+  document.getElementById('subHeader').textContent =
+    (data.entryName || entry) + ' · Week ' + WEEK + ' · locks ' +
+    LOCK_DEADLINE.toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+
+  if (new Date() > LOCK_DEADLINE) {
+    document.getElementById('lockBanner').textContent = 'Picks for this week are locked — the first game has already kicked off.';
+    document.getElementById('lockBanner').hidden = false;
+    return;
+  }
+
+  renderForm(data.existing);
+  document.getElementById('pickForm').hidden = false;
+}
+
+function renderForm(existing) {
+  const list = document.getElementById('gamesList');
+  list.innerHTML = '';
+
+  GAMES.forEach(function (g, i) {
+    const row = document.createElement('div');
+    row.className = 'game-row';
+
+    const left = document.createElement('div');
+    const matchup = document.createElement('div');
+    matchup.className = 'matchup';
+    matchup.textContent = g.away + ' @ ' + g.home;
+    const choices = document.createElement('div');
+    choices.className = 'pick-choices';
+    [g.away, g.home].forEach(function (team) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'pick-btn';
+      btn.textContent = team;
+      btn.dataset.gameIndex = i;
+      btn.dataset.team = team;
+      if (existing && existing.picks[i] === team) btn.classList.add('selected');
+      btn.addEventListener('click', function () {
+        row.querySelectorAll('.pick-btn').forEach(function (b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+      });
+      choices.appendChild(btn);
+    });
+    left.appendChild(matchup);
+    left.appendChild(choices);
+
+    const select = document.createElement('select');
+    select.className = 'confidence';
+    select.dataset.gameIndex = i;
+    select.innerHTML = '<option value="">#</option>';
+    if (existing && existing.confidences[i]) {
+      const opt = document.createElement('option');
+      opt.value = existing.confidences[i];
+      opt.textContent = existing.confidences[i];
+      opt.selected = true;
+      select.appendChild(opt);
+    }
+    select.addEventListener('focus', function () { refreshConfidenceOptions(); });
+    select.addEventListener('change', refreshConfidenceOptions);
+
+    row.appendChild(left);
+    row.appendChild(select);
+    list.appendChild(row);
+  });
+
+  refreshConfidenceOptions();
+}
+
+/** Rebuild every confidence <select>'s options so an already-used number
+ * only still appears in the select that currently holds it. */
+function refreshConfidenceOptions() {
+  const selects = Array.from(document.querySelectorAll('select.confidence'));
+  const used = {};
+  selects.forEach(function (s) { if (s.value) used[s.value] = s; });
+
+  selects.forEach(function (s) {
+    const current = s.value;
+    s.innerHTML = '<option value="">#</option>';
+    for (let n = 1; n <= GAMES.length; n++) {
+      if (used[n] && used[n] !== s) continue; // taken by a different row
+      const opt = document.createElement('option');
+      opt.value = n;
+      opt.textContent = n;
+      if (String(n) === current) opt.selected = true;
+      s.appendChild(opt);
+    }
+  });
+}
+
+document.getElementById('pickForm').addEventListener('submit', async function (ev) {
+  ev.preventDefault();
+  document.getElementById('errorBanner').hidden = true;
+  document.getElementById('successBanner').hidden = true;
+
+  const winners = [];
+  const confidences = [];
+  let complete = true;
+
+  GAMES.forEach(function (g, i) {
+    const row = document.querySelectorAll('.game-row')[i];
+    const selectedBtn = row.querySelector('.pick-btn.selected');
+    const select = row.querySelector('select.confidence');
+    if (!selectedBtn || !select.value) complete = false;
+    winners.push(selectedBtn ? selectedBtn.dataset.team : null);
+    confidences.push(select.value ? Number(select.value) : null);
+  });
+
+  if (!complete) {
+    showError('Pick a winner and a confidence number for every game before submitting.');
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ entry: entry, week: WEEK, winners: winners, confidences: confidences }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      document.getElementById('successBanner').hidden = false;
+    } else {
+      showError(data.error || 'Could not save your picks.');
+    }
+  } catch (e) {
+    showError('Could not reach the pool server. Try again.');
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Submit picks';
+});
+
+load();
+</script>
+</body>
+</html>
