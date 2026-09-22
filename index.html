@@ -261,7 +261,7 @@
    Mirrors confidence_pool_log.json. To update: re-paste the "weeks" object
    and sourceAccuracyTally here after each week's picks/results change. */
 const DATA = {
-  generatedAt: "2026-09-16",
+  generatedAt: "2026-09-22",
   poolInfo: {
     entries: 2,
     format: "winner-take-all confidence pool"
@@ -291,22 +291,43 @@ const DATA = {
     },
     "2": {
       games: [
-        { pts: 16, matchup: "MIA @ SF",  pick1: "SF",  pick2: "SF",  vegasProb: 0.823, dimersProb: 0.861, split: false },
-        { pts: 15, matchup: "NO @ BAL",  pick1: "BAL", pick2: "BAL", vegasProb: 0.735, dimersProb: 0.763, split: false },
-        { pts: 14, matchup: "CLE @ TB",  pick1: "TB",  pick2: "TB",  vegasProb: 0.735, dimersProb: 0.757, split: false },
-        { pts: 13, matchup: "NYG @ LAR", pick1: "LAR", pick2: "NYG", vegasProb: 0.698, dimersProb: 0.761, split: true, splitSource: "Yahoo/Sportsnaut takes Giants outright MNF upset; Vegas+Dimers strongly favor Rams", note: "Biggest risk/reward split of the season so far — not a toss-up, a real swing on a strongly-favored team." },
-        { pts: 12, matchup: "PHI @ TEN", pick1: "PHI", pick2: "PHI", vegasProb: 0.698, dimersProb: 0.742, split: false },
-        { pts: 11, matchup: "LV @ LAC",  pick1: "LAC", pick2: "LAC", vegasProb: 0.698, dimersProb: 0.719, split: false },
-        { pts: 10, matchup: "IND @ KC",  pick1: "KC",  pick2: "KC",  vegasProb: 0.685, dimersProb: 0.701, split: false },
-        { pts: 9,  matchup: "PIT @ NE",  pick1: "NE",  pick2: "NE",  vegasProb: 0.658, dimersProb: 0.693, split: false },
-        { pts: 8,  matchup: "MIN @ CHI", pick1: "CHI", pick2: "CHI", vegasProb: 0.658, dimersProb: 0.671, split: false },
-        { pts: 7,  matchup: "GB @ NYJ",  pick1: "GB",  pick2: "GB",  vegasProb: 0.631, dimersProb: 0.647, split: false },
-        { pts: 6,  matchup: "SEA @ ARI", pick1: "SEA", pick2: "SEA", vegasProb: 0.631, dimersProb: 0.626, split: false },
-        { pts: 5,  matchup: "DET @ BUF", pick1: "BUF", pick2: "BUF", vegasProb: 0.602, dimersProb: 0.659, split: false },
-        { pts: 4,  matchup: "WAS @ DAL", pick1: "DAL", pick2: "DAL", vegasProb: 0.602, dimersProb: 0.611, split: false },
-        { pts: 3,  matchup: "CIN @ HOU", pick1: "HOU", pick2: "CIN", vegasProb: 0.588, dimersProb: 0.564, split: true, splitSource: "Yahoo/Sportsnaut favors Bengals outright" },
-        { pts: 2,  matchup: "JAX @ DEN", pick1: "DEN", pick2: "JAX", vegasProb: 0.573, dimersProb: 0.574, split: true, splitSource: "Yahoo/Sportsnaut favors Jaguars outright" },
-        { pts: 1,  matchup: "CAR @ ATL", pick1: "CAR", pick2: "CAR", vegasProb: 0.544, dimersProb: 0.584, split: false, note: "Coin-flip game, correctly parked at 1 point regardless of source agreement." }
+        { pts: 16, matchup: "MIA @ SF",  pick1: "SF",  pick2: "SF",  vegasProb: 0.823, dimersProb: 0.861, split: false, result: "SF", score: "SF 35-13" },
+        { pts: 15, matchup: "NO @ BAL",  pick1: "BAL", pick2: "BAL", vegasProb: 0.735, dimersProb: 0.763, split: false, result: "NO", score: "NO 24-17", note: "Biggest miss of the week — our single highest-confidence pick, wrong (echoes Week 1's #1-pick miss)." },
+        { pts: 14, matchup: "CLE @ TB",  pick1: "TB",  pick2: "TB",  vegasProb: 0.735, dimersProb: 0.757, split: false, result: "CLE", score: "CLE 23-19" },
+        { pts: 13, matchup: "NYG @ LAR", pick1: "LAR", pick2: "NYG", vegasProb: 0.698, dimersProb: 0.761, split: true, splitSource: "Yahoo/Sportsnaut takes Giants outright MNF upset; Vegas+Dimers strongly favor Rams", note: "Biggest risk/reward split of the season so far — not a toss-up, a real swing on a strongly-favored team.", result: "LAR", score: "LAR 28-6" },
+        { pts: 12, matchup: "PHI @ TEN", pick1: "PHI", pick2: "PHI", vegasProb: 0.698, dimersProb: 0.742, split: false, result: "PHI", score: "PHI 24-20" },
+        { pts: 11, matchup: "LV @ LAC",  pick1: "LAC", pick2: "LAC", vegasProb: 0.698, dimersProb: 0.719, split: false, result: "LV", score: "LV 26-14" },
+        { pts: 10, matchup: "IND @ KC",  pick1: "KC",  pick2: "KC",  vegasProb: 0.685, dimersProb: 0.701, split: false, result: "KC", score: "KC 33-30 (OT)" },
+        { pts: 9,  matchup: "PIT @ NE",  pick1: "NE",  pick2: "NE",  vegasProb: 0.658, dimersProb: 0.693, split: false, result: "NE", score: "NE 20-3" },
+        { pts: 8,  matchup: "MIN @ CHI", pick1: "CHI", pick2: "CHI", vegasProb: 0.658, dimersProb: 0.671, split: false, result: "MIN", score: "MIN 9-3" },
+        { pts: 7,  matchup: "GB @ NYJ",  pick1: "GB",  pick2: "GB",  vegasProb: 0.631, dimersProb: 0.647, split: false, result: "GB", score: "GB 20-17 (OT)" },
+        { pts: 6,  matchup: "SEA @ ARI", pick1: "SEA", pick2: "SEA", vegasProb: 0.631, dimersProb: 0.626, split: false, result: "SEA", score: "SEA 31-7" },
+        { pts: 5,  matchup: "DET @ BUF", pick1: "BUF", pick2: "BUF", vegasProb: 0.602, dimersProb: 0.659, split: false, result: "BUF", score: "BUF 41-31" },
+        { pts: 4,  matchup: "WAS @ DAL", pick1: "DAL", pick2: "DAL", vegasProb: 0.602, dimersProb: 0.611, split: false, result: "DAL", score: "DAL 37-20" },
+        { pts: 3,  matchup: "CIN @ HOU", pick1: "HOU", pick2: "CIN", vegasProb: 0.588, dimersProb: 0.564, split: true, splitSource: "Yahoo/Sportsnaut favors Bengals outright", result: "CIN", score: "CIN 20-6", note: "Decorrelation win — Entry 2's contrarian pick hit." },
+        { pts: 2,  matchup: "JAX @ DEN", pick1: "DEN", pick2: "JAX", vegasProb: 0.573, dimersProb: 0.574, split: true, splitSource: "Yahoo/Sportsnaut favors Jaguars outright", result: "DEN", score: "DEN 20-13" },
+        { pts: 1,  matchup: "CAR @ ATL", pick1: "CAR", pick2: "CAR", vegasProb: 0.544, dimersProb: 0.584, split: false, note: "Coin-flip game, correctly parked at 1 point regardless of source agreement.", result: "CAR", score: "CAR 34-3" }
+      ],
+      computedTotals: { entry1: 85, entry2: 73 }
+    },
+    "3": {
+      games: [
+        { pts: 16, matchup: "KC @ MIA",  pick1: "KC",  pick2: "KC",  vegasProb: 0.803, dimersProb: 0.819, split: false, note: "Highest-confidence pick of the week, all sources strongly aligned." },
+        { pts: 15, matchup: "ARI @ SF",  pick1: "SF",  pick2: "SF",  vegasProb: 0.736, dimersProb: 0.769, split: false },
+        { pts: 14, matchup: "LAC @ BUF", pick1: "BUF", pick2: "BUF", vegasProb: 0.698, dimersProb: 0.749, split: false, note: "Tied with GB on spread — Dimers tiebreak (74.9% vs 71.5%) ranks BUF one slot above GB." },
+        { pts: 13, matchup: "ATL @ GB",  pick1: "GB",  pick2: "GB",  vegasProb: 0.698, dimersProb: 0.715, split: false, note: "Tied with BUF on spread, loses the Dimers tiebreak." },
+        { pts: 12, matchup: "NYJ @ DET", pick1: "DET", pick2: "DET", vegasProb: 0.685, dimersProb: 0.721, split: false, note: "Tied with SEA on spread — Dimers tiebreak (72.1% vs 68.5%) ranks DET one slot above SEA." },
+        { pts: 11, matchup: "SEA @ WAS", pick1: "SEA", pick2: "SEA", vegasProb: 0.685, dimersProb: 0.685, split: false, note: "Tied with DET on spread, loses the Dimers tiebreak." },
+        { pts: 10, matchup: "TEN @ NYG", pick1: "NYG", pick2: "NYG", vegasProb: 0.670, dimersProb: 0.643, split: false },
+        { pts: 9,  matchup: "CIN @ PIT", pick1: "CIN", pick2: "CIN", vegasProb: 0.602, dimersProb: 0.644, split: false, note: "Tied with PHI on spread — Dimers tiebreak (64.4% vs 62.3%) ranks CIN one slot above PHI." },
+        { pts: 8,  matchup: "PHI @ CHI", pick1: "PHI", pick2: "PHI", vegasProb: 0.602, dimersProb: 0.623, split: false, note: "Tied with CIN on spread, loses the Dimers tiebreak. Bears starting Tyson Bagent for injured Caleb Williams — context only, doesn't flip the favorite." },
+        { pts: 7,  matchup: "LV @ NO",   pick1: "NO",  pick2: "NO",  vegasProb: 0.587, dimersProb: 0.641, split: false, note: "Part of a 5-way -3 spread tie cluster (JAX/CAR/HOU/BAL/NO) — Dimers 64.1% is highest of the 5, ranks 1st." },
+        { pts: 6,  matchup: "BAL @ DAL", pick1: "BAL", pick2: "BAL", vegasProb: 0.587, dimersProb: 0.615, split: false, note: "5-way -3 spread tie cluster — Dimers 61.5% ranks 2nd of 5." },
+        { pts: 5,  matchup: "NE @ JAX",  pick1: "JAX", pick2: "JAX", vegasProb: 0.587, dimersProb: 0.607, split: false, note: "5-way -3 spread tie cluster — Dimers 60.7% ranks 3rd of 5." },
+        { pts: 4,  matchup: "CAR @ CLE", pick1: "CAR", pick2: "CAR", vegasProb: 0.587, dimersProb: 0.602, split: false, note: "5-way -3 spread tie cluster — Dimers 60.2% ranks 4th of 5. VegasInsider briefly showed CLE favored, an outlier disregarded against 6 other sources favoring CAR." },
+        { pts: 3,  matchup: "HOU @ IND", pick1: "HOU", pick2: "HOU", vegasProb: 0.587, dimersProb: 0.568, split: false, note: "5-way -3 spread tie cluster — Dimers 56.8% is lowest, ranks last. FPI (53%) is the shakiest read of the week." },
+        { pts: 2,  matchup: "LAR @ DEN", pick1: "LAR", pick2: "DEN", vegasProb: 0.573, dimersProb: 0.611, split: true, splitSource: "Yahoo/Sportsnaut alone favors Broncos; Vegas, Dimers (61.1%), and ESPN FPI (58%) all favor Rams — only flagged split this week.", note: "Only source disagreement found across all 16 games this week." },
+        { pts: 1,  matchup: "MIN @ TB",  pick1: "MIN", pick2: "MIN", vegasProb: 0.544, dimersProb: 0.570, split: false, note: "True coin-flip game (spread ≤2), correctly parked at 1 point." }
       ]
     }
   },
@@ -323,11 +344,11 @@ const DATA = {
     ]
   },
   sourceAccuracyTally: {
-    vegasClose: { correct: 11, total: 16 },
-    espnFPI: { correct: 0, total: 0 },
-    sportsline: { correct: 0, total: 0 },
-    dimers: { correct: 12, total: 16 },
-    yahooSportsnaut: { correct: 10, total: 16 },
+    vegasClose: { correct: 22, total: 32 },
+    espnFPI: { correct: 3, total: 3 },
+    sportsline: { correct: 1, total: 2 },
+    dimers: { correct: 23, total: 32 },
+    yahooSportsnaut: { correct: 20, total: 32 },
     teamRankings: { correct: 0, total: 0 },
     walterfootball: { correct: 0, total: 0 }
   }
