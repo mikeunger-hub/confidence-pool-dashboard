@@ -261,7 +261,7 @@
    Mirrors confidence_pool_log.json. To update: re-paste the "weeks" object
    and sourceAccuracyTally here after each week's picks/results change. */
 const DATA = {
-  generatedAt: "2026-09-23",
+  generatedAt: "2026-09-30",
   poolInfo: {
     entries: 2,
     format: "winner-take-all confidence pool"
@@ -312,22 +312,43 @@ const DATA = {
     },
     "3": {
       games: [
-        { pts: 16, matchup: "KC @ MIA",  pick1: "KC",  pick2: "KC",  vegasProb: 0.803, dimersProb: 0.819, split: false, note: "Highest-confidence pick of the week, all sources strongly aligned." },
-        { pts: 15, matchup: "ARI @ SF",  pick1: "SF",  pick2: "SF",  vegasProb: 0.736, dimersProb: 0.769, split: false },
-        { pts: 14, matchup: "LAC @ BUF", pick1: "BUF", pick2: "BUF", vegasProb: 0.698, dimersProb: 0.749, split: false, note: "Tied with GB on spread — Dimers tiebreak (74.9% vs 71.5%) ranks BUF one slot above GB." },
-        { pts: 13, matchup: "ATL @ GB",  pick1: "GB",  pick2: "GB",  vegasProb: 0.698, dimersProb: 0.715, split: false, note: "Tied with BUF on spread, loses the Dimers tiebreak." },
-        { pts: 12, matchup: "NYJ @ DET", pick1: "DET", pick2: "DET", vegasProb: 0.685, dimersProb: 0.721, split: false, note: "Tied with SEA on spread — Dimers tiebreak (72.1% vs 68.5%) ranks DET one slot above SEA." },
-        { pts: 11, matchup: "SEA @ WAS", pick1: "SEA", pick2: "SEA", vegasProb: 0.685, dimersProb: 0.685, split: false, note: "Tied with DET on spread, loses the Dimers tiebreak." },
-        { pts: 10, matchup: "PHI @ CHI", pick1: "PHI", pick2: "PHI", vegasProb: 0.630, dimersProb: 0.608, split: false, note: "Line moved PHI -3.5 → -4.5 (2026-09-23 check): Tyson Bagent entered concussion protocol, Case Keenum next in line for Chicago. Moved up from 8pts, no longer tied with CIN." },
-        { pts: 9,  matchup: "CIN @ PIT", pick1: "CIN", pick2: "CIN", vegasProb: 0.602, dimersProb: 0.644, split: false },
-        { pts: 8,  matchup: "TEN @ NYG", pick1: "NYG", pick2: "NYG", vegasProb: 0.587, dimersProb: 0.643, split: false, note: "Line moved NYG -6 → -3 (2026-09-23 check): Jaxson Dart (knee) out, Jameis Winston starting. Dropped from 10pts, wins the Dimers tiebreak in the -3 cluster (64.3%)." },
-        { pts: 7,  matchup: "LV @ NO",   pick1: "NO",  pick2: "NO",  vegasProb: 0.587, dimersProb: 0.641, split: false, note: "Part of a 5-way -3 spread tie cluster (JAX/CAR/HOU/BAL/NO) — Dimers 64.1% is highest of the 5, ranks 1st." },
-        { pts: 6,  matchup: "BAL @ DAL", pick1: "BAL", pick2: "BAL", vegasProb: 0.587, dimersProb: 0.615, split: false, note: "5-way -3 spread tie cluster — Dimers 61.5% ranks 2nd of 5." },
-        { pts: 5,  matchup: "NE @ JAX",  pick1: "JAX", pick2: "JAX", vegasProb: 0.587, dimersProb: 0.607, split: false, note: "5-way -3 spread tie cluster — Dimers 60.7% ranks 3rd of 5." },
-        { pts: 4,  matchup: "CAR @ CLE", pick1: "CAR", pick2: "CAR", vegasProb: 0.587, dimersProb: 0.602, split: false, note: "5-way -3 spread tie cluster — Dimers 60.2% ranks 4th of 5. VegasInsider briefly showed CLE favored, an outlier disregarded against 6 other sources favoring CAR." },
-        { pts: 3,  matchup: "HOU @ IND", pick1: "HOU", pick2: "HOU", vegasProb: 0.587, dimersProb: 0.568, split: false, note: "5-way -3 spread tie cluster — Dimers 56.8% is lowest, ranks last. FPI (53%) is the shakiest read of the week." },
-        { pts: 2,  matchup: "LAR @ DEN", pick1: "LAR", pick2: "DEN", vegasProb: 0.544, dimersProb: 0.611, split: true, splitSource: "Yahoo/Sportsnaut alone favors Broncos; Vegas, Dimers (61.1%), and ESPN FPI (58%) all favor Rams — only flagged split this week.", note: "Only source disagreement found across all 16 games this week. Spread softened -2.5 → -1.5 as of 2026-09-23, now a true coin-flip, but rank unchanged." },
-        { pts: 1,  matchup: "MIN @ TB",  pick1: "MIN", pick2: "MIN", vegasProb: 0.544, dimersProb: 0.570, split: false, note: "True coin-flip game (spread ≤2), correctly parked at 1 point." }
+        { pts: 16, matchup: "KC @ MIA",  pick1: "KC",  pick2: "KC",  vegasProb: 0.803, dimersProb: 0.819, split: false, note: "Highest-confidence pick of the week, all sources strongly aligned.", result: "KC", score: "KC 24-10" },
+        { pts: 15, matchup: "ARI @ SF",  pick1: "SF",  pick2: "SF",  vegasProb: 0.736, dimersProb: 0.769, split: false, result: "SF", score: "SF 36-30" },
+        { pts: 14, matchup: "LAC @ BUF", pick1: "BUF", pick2: "BUF", vegasProb: 0.698, dimersProb: 0.749, split: false, note: "Tied with GB on spread — Dimers tiebreak (74.9% vs 71.5%) ranks BUF one slot above GB.", result: "BUF", score: "BUF 24-16" },
+        { pts: 13, matchup: "ATL @ GB",  pick1: "GB",  pick2: "GB",  vegasProb: 0.698, dimersProb: 0.715, split: false, note: "Tied with BUF on spread, loses the Dimers tiebreak.", result: "ATL", score: "ATL 35-14" },
+        { pts: 12, matchup: "NYJ @ DET", pick1: "DET", pick2: "DET", vegasProb: 0.685, dimersProb: 0.721, split: false, note: "Tied with SEA on spread — Dimers tiebreak (72.1% vs 68.5%) ranks DET one slot above SEA.", result: "DET", score: "DET 31-24" },
+        { pts: 11, matchup: "SEA @ WAS", pick1: "SEA", pick2: "SEA", vegasProb: 0.685, dimersProb: 0.685, split: false, note: "Tied with DET on spread, loses the Dimers tiebreak.", result: "WAS", score: "WAS 33-31" },
+        { pts: 10, matchup: "PHI @ CHI", pick1: "PHI", pick2: "PHI", vegasProb: 0.630, dimersProb: 0.608, split: false, note: "Line moved PHI -3.5 → -4.5 (2026-09-23 check): Tyson Bagent entered concussion protocol, Case Keenum next in line for Chicago. Moved up from 8pts, no longer tied with CIN.", result: "CHI", score: "CHI 27-7" },
+        { pts: 9,  matchup: "CIN @ PIT", pick1: "CIN", pick2: "CIN", vegasProb: 0.602, dimersProb: 0.644, split: false, result: "PIT", score: "PIT 30-27" },
+        { pts: 8,  matchup: "TEN @ NYG", pick1: "NYG", pick2: "NYG", vegasProb: 0.587, dimersProb: 0.643, split: false, note: "Line moved NYG -6 → -3 (2026-09-23 check): Jaxson Dart (knee) out, Jameis Winston starting. Dropped from 10pts, wins the Dimers tiebreak in the -3 cluster (64.3%).", result: "NYG", score: "NYG 12-7" },
+        { pts: 7,  matchup: "LV @ NO",   pick1: "NO",  pick2: "NO",  vegasProb: 0.587, dimersProb: 0.641, split: false, note: "Part of a 5-way -3 spread tie cluster (JAX/CAR/HOU/BAL/NO) — Dimers 64.1% is highest of the 5, ranks 1st.", result: "LV", score: "LV 35-27" },
+        { pts: 6,  matchup: "BAL @ DAL", pick1: "BAL", pick2: "BAL", vegasProb: 0.587, dimersProb: 0.615, split: false, note: "5-way -3 spread tie cluster — Dimers 61.5% ranks 2nd of 5.", result: "BAL", score: "BAL 34-31" },
+        { pts: 5,  matchup: "NE @ JAX",  pick1: "JAX", pick2: "JAX", vegasProb: 0.587, dimersProb: 0.607, split: false, note: "5-way -3 spread tie cluster — Dimers 60.7% ranks 3rd of 5.", result: "JAX", score: "JAX 35-6" },
+        { pts: 4,  matchup: "CAR @ CLE", pick1: "CAR", pick2: "CAR", vegasProb: 0.587, dimersProb: 0.602, split: false, note: "5-way -3 spread tie cluster — Dimers 60.2% ranks 4th of 5. VegasInsider briefly showed CLE favored, an outlier disregarded against 6 other sources favoring CAR.", result: "CLE", score: "CLE 21-18" },
+        { pts: 3,  matchup: "HOU @ IND", pick1: "HOU", pick2: "HOU", vegasProb: 0.587, dimersProb: 0.568, split: false, note: "5-way -3 spread tie cluster — Dimers 56.8% is lowest, ranks last. FPI (53%) is the shakiest read of the week.", result: "IND", score: "IND 19-17" },
+        { pts: 2,  matchup: "LAR @ DEN", pick1: "LAR", pick2: "DEN", vegasProb: 0.544, dimersProb: 0.611, split: true, splitSource: "Yahoo/Sportsnaut alone favors Broncos; Vegas, Dimers (61.1%), and ESPN FPI (58%) all favor Rams — only flagged split this week.", note: "Decorrelation win — Entry 2's contrarian pick hit.", result: "DEN", score: "DEN 30-26" },
+        { pts: 1,  matchup: "MIN @ TB",  pick1: "MIN", pick2: "MIN", vegasProb: 0.544, dimersProb: 0.570, split: false, note: "True coin-flip game (spread ≤2), correctly parked at 1 point.", result: "MIN", score: "MIN 23-16" }
+      ],
+      computedTotals: { entry1: 77, entry2: 79 }
+    },
+    "4": {
+      games: [
+        { pts: 16, matchup: "TEN @ BAL", pick1: "BAL", pick2: "BAL", vegasProb: 0.803, dimersProb: 0.851, split: false, note: "Tied with MIN/MIA on spread — Dimers tiebreak (85.1% vs 83.0%) ranks BAL one slot above MIN. Highest-confidence pick of the week." },
+        { pts: 15, matchup: "MIA @ MIN", pick1: "MIN", pick2: "MIN", vegasProb: 0.803, dimersProb: 0.830, split: false, note: "Tied with BAL/TEN on spread, loses the Dimers tiebreak. Spread varies by book (-10 to -11.5); used -11.5 for consistency." },
+        { pts: 14, matchup: "LAC @ SEA", pick1: "SEA", pick2: "SEA", vegasProb: 0.698, dimersProb: 0.745, split: false, note: "Tied with NE/BUF on spread — Dimers tiebreak (74.5% vs 70.7%) ranks SEA one slot above BUF." },
+        { pts: 13, matchup: "NE @ BUF",  pick1: "BUF", pick2: "BUF", vegasProb: 0.698, dimersProb: 0.707, split: false, note: "Tied with LAC/SEA on spread, loses the Dimers tiebreak." },
+        { pts: 12, matchup: "KC @ LV",   pick1: "KC",  pick2: "KC",  vegasProb: 0.630, dimersProb: 0.677, split: false, note: "Road favorite — Chiefs at Raiders." },
+        { pts: 11, matchup: "GB @ TB",   pick1: "GB",  pick2: "TB",  vegasProb: 0.602, dimersProb: 0.655, split: true, splitSource: "Yahoo/Sportsnaut alone favors Buccaneers; Vegas, Dimers (65.5%), and ESPN FPI (67%) all favor Packers.", note: "Road favorite — Packers at Buccaneers. Baker Mayfield out ~3 weeks (thumb); undrafted rookie Jalon Daniels starts for TB — already priced into the line." },
+        { pts: 10, matchup: "IND @ WAS", pick1: "IND", pick2: "IND", vegasProb: 0.602, dimersProb: 0.630, split: false, note: "London game. 4-way -3.5 tie cluster — Dimers 63.0% ranks 2nd of 4." },
+        { pts: 9,  matchup: "DET @ CAR", pick1: "DET", pick2: "DET", vegasProb: 0.602, dimersProb: 0.621, split: false, note: "Road favorite — Lions at Panthers, Sunday Night. 4-way -3.5 tie cluster — Dimers 62.1% ranks 3rd of 4." },
+        { pts: 8,  matchup: "NYJ @ CHI", pick1: "CHI", pick2: "CHI", vegasProb: 0.602, dimersProb: 0.606, split: false, note: "4-way -3.5 tie cluster — Dimers 60.6% is lowest, ranks last." },
+        { pts: 7,  matchup: "DEN @ SF",  pick1: "SF",  pick2: "DEN", vegasProb: 0.587, dimersProb: 0.627, split: true, splitSource: "Yahoo/Sportsnaut alone favors Broncos; Vegas, Dimers (62.7%), and ESPN FPI (77%, most lopsided read of the week) all favor 49ers.", note: "3-way -3 tie cluster — Dimers ranks SF 1st of 3." },
+        { pts: 6,  matchup: "LAR @ PHI", pick1: "LAR", pick2: "LAR", vegasProb: 0.587, dimersProb: 0.613, split: false, note: "Road favorite — Rams at Eagles. 3-way -3 tie cluster — Dimers ranks 2nd of 3." },
+        { pts: 5,  matchup: "ATL @ NO",  pick1: "NO",  pick2: "NO",  vegasProb: 0.587, dimersProb: 0.598, split: false, note: "Monday Night Football. 3-way -3 tie cluster — Dimers lowest, ranks last of 3." },
+        { pts: 4,  matchup: "PIT @ CLE", pick1: "PIT", pick2: "PIT", vegasProb: 0.573, dimersProb: 0.601, split: false, note: "Thursday Night Football — first kickoff of the week. 3-way -2.5 tie cluster — Dimers ranks 1st of 3." },
+        { pts: 3,  matchup: "JAX @ CIN", pick1: "CIN", pick2: "JAX", vegasProb: 0.573, dimersProb: 0.597, split: true, splitSource: "Both ESPN FPI (55% Jaguars) and Yahoo/Sportsnaut favor Jacksonville — two independent sources agreeing against Vegas/Dimers' Bengals favorite.", note: "3-way -2.5 tie cluster — Dimers ranks 2nd of 3." },
+        { pts: 2,  matchup: "DAL @ HOU", pick1: "HOU", pick2: "DAL", vegasProb: 0.573, dimersProb: 0.569, split: true, splitSource: "Both ESPN FPI (54% Cowboys) and Yahoo/Sportsnaut favor Dallas — two independent sources agreeing against Vegas/Dimers' Texans favorite.", note: "3-way -2.5 tie cluster — Dimers ranks 3rd of 3, lowest." },
+        { pts: 1,  matchup: "ARI @ NYG", pick1: "ARI", pick2: "ARI", vegasProb: 0.544, dimersProb: 0.514, split: false, note: "Road favorite — Cardinals at Giants. True coin-flip game (spread ≤2), correctly parked at 1 point. Jaxson Dart's season-ending injury cements Jameis Winston as NYG's starter." }
       ]
     }
   },
@@ -344,13 +365,13 @@ const DATA = {
     ]
   },
   sourceAccuracyTally: {
-    vegasClose: { correct: 22, total: 32 },
-    espnFPI: { correct: 3, total: 3 },
-    sportsline: { correct: 1, total: 2 },
-    dimers: { correct: 23, total: 32 },
-    yahooSportsnaut: { correct: 20, total: 32 },
+    vegasClose: { correct: 30, total: 48 },
+    espnFPI: { correct: 11, total: 19 },
+    sportsline: { correct: 1, total: 3 },
+    dimers: { correct: 31, total: 48 },
+    yahooSportsnaut: { correct: 29, total: 48 },
     teamRankings: { correct: 0, total: 0 },
-    walterfootball: { correct: 0, total: 0 }
+    walterfootball: { correct: 0, total: 1 }
   }
 };
 /* ------------------------------------ */
